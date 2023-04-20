@@ -4,10 +4,12 @@ import com.jsoniter.output.JsonStream;
 import gpsUtil.location.Location;
 import gpsUtil.location.VisitedLocation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import tourGuide.service.TourGuideService;
+import tourGuide.service.UserService;
 import tourGuide.user.User;
 import tripPricer.Provider;
 
@@ -15,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 public class TourGuideController {
@@ -22,13 +25,16 @@ public class TourGuideController {
     @Autowired
     TourGuideService tourGuideService;
 
+    @Autowired
+    UserService userService;
+
     @RequestMapping("/")
     public String index() {
         return "Greetings from TourGuide!";
     }
 
     @RequestMapping("/getLocation")
-    public String getLocation(@RequestParam String userName) {
+    public String getLocation(@RequestParam String userName) throws ExecutionException, InterruptedException {
         VisitedLocation visitedLocation = tourGuideService.getUserLocation(getUser(userName));
         return JsonStream.serialize(visitedLocation.location);
     }
@@ -43,7 +49,7 @@ public class TourGuideController {
     // The reward points for visiting each Attraction.
     //    Note: Attraction reward points can be gathered from RewardsCentral
     @RequestMapping("/getNearbyAttractions")
-    public String getNearbyAttractions(@RequestParam String userName) {
+    public String getNearbyAttractions(@RequestParam String userName) throws ExecutionException, InterruptedException {
         VisitedLocation visitedLocation = tourGuideService.getUserLocation(getUser(userName));
         return JsonStream.serialize(tourGuideService.getNearByAttractions(visitedLocation));
     }
@@ -86,6 +92,13 @@ public class TourGuideController {
     public String getTripDeals(@RequestParam String userName) {
         List<Provider> providers = tourGuideService.getTripDeals(getUser(userName));
         return JsonStream.serialize(providers);
+    }
+
+    @PostMapping("/setUserPreferences")
+    public void updateUserPreferences(@RequestParam String userName){
+
+        userService.updateUserPreferences(getUser(userName));
+
     }
 
     private User getUser(String userName) {

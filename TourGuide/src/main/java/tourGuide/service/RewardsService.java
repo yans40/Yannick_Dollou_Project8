@@ -12,6 +12,9 @@ import tourGuide.user.UserReward;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Service
 public class RewardsService {
@@ -41,15 +44,17 @@ public class RewardsService {
 		List<VisitedLocation> userLocations = new ArrayList<>(user.getVisitedLocations());
 		List<Attraction> attractions = gpsUtil.getAttractions();
 
+
 		for(VisitedLocation visitedLocation : userLocations) {
 			for(Attraction attraction : attractions) {
 
 				if(user.getUserRewards().stream().noneMatch(r -> r.getAttraction().attractionName.equals(attraction.attractionName)) && (nearAttraction(visitedLocation, attraction))) {
-					user.addUserReward(new UserReward(visitedLocation, attraction));
+					user.addUserReward(new UserReward(visitedLocation, attraction,getRewPoints(attraction,user.getUserId())));
 
 				}
 			}
 		}
+
 	}
 
 	public boolean isWithinAttractionProximity(Attraction attraction, Location location) {

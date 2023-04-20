@@ -3,6 +3,10 @@ package tourGuide.service;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -58,7 +62,7 @@ public class TourGuideService {
         return user.getUserRewards();
     }
 
-    public VisitedLocation getUserLocation(User user) {
+    public VisitedLocation getUserLocation(User user) throws ExecutionException, InterruptedException {
         VisitedLocation visitedLocation;
         if (!user.getVisitedLocations().isEmpty()) visitedLocation = user.getLastVisitedLocation();
         else visitedLocation = trackUserLocation(user);
@@ -87,13 +91,23 @@ public class TourGuideService {
         return providers;
     }
 
-    public VisitedLocation trackUserLocation(User user) {
+    public VisitedLocation trackUserLocation(User user) throws ExecutionException, InterruptedException {
+        ExecutorService executorService = Executors.newFixedThreadPool(100);
         Locale.setDefault(Locale.US);
-        VisitedLocation visitedLocation = gpsUtil.getUserLocation(user.getUserId());
-        user.addToVisitedLocations(visitedLocation);
-        rewardsService.calculateRewards(user);
-        return visitedLocation;
+        CompletableFuture.supplyAsync(() -> {
+                    VisitedLocation visitedLocation = gpsUtil.getUserLocation(user.getUserId());
+                    user.addToVisitedLocations(visitedLocation);
+                    rewardsService.calculateRewards(user);
+                    return visitedLocation;
+                }, executorService)
+                .thenAccept(visitedLocation -> {
+                    System.out.println("User " + user.getUserName() + " tracked at location " + visitedLocation.location.toString());
+                });
+        return null;
+
     }
+
+
 
     public NearByAttractionDto getNearByAttractions(VisitedLocation visitedLocation) {
 
