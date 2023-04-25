@@ -5,12 +5,11 @@ import gpsUtil.location.VisitedLocation;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+
 public class UserReward {
 
 	private  VisitedLocation visitedLocation;
-	private Attraction attraction;
+	public Attraction attraction;
 	private int rewardPoints;
 	public UserReward(VisitedLocation visitedLocation, Attraction attraction, int rewardPoints) {
 		this.visitedLocation = visitedLocation;
@@ -23,15 +22,12 @@ public class UserReward {
 		this.attraction = attraction;
 	}
 
-//    public UserReward() {
-//
-//    }
 
 	public void setRewardPoints(int rewardPoints) {
 		this.rewardPoints = rewardPoints;
 	}
 	
-	public int getRewardPoints() {//TODO nous avons 2 methodes getRewardsPoints
+	public int getRewardPoints() {
 		return rewardPoints;
 	}
 	

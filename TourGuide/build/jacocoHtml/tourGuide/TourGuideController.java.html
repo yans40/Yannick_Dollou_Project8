@@ -51,7 +51,7 @@ import java.util.concurrent.ExecutionException;
     @RequestMapping(&quot;/getNearbyAttractions&quot;)
     public String getNearbyAttractions(@RequestParam String userName) throws ExecutionException, InterruptedException {
 <span class="nc" id="L53">        VisitedLocation visitedLocation = tourGuideService.getUserLocation(getUser(userName));</span>
-<span class="nc" id="L54">        return JsonStream.serialize(tourGuideService.getNearByAttractions(visitedLocation));</span>
+<span class="nc" id="L54">        return JsonStream.serialize(tourGuideService.getNearByAttractions(visitedLocation,userName));</span>
     }
 
     @RequestMapping(&quot;/getRewards&quot;)

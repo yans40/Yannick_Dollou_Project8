@@ -51,7 +51,7 @@ public class TourGuideController {
     @RequestMapping("/getNearbyAttractions")
     public String getNearbyAttractions(@RequestParam String userName) throws ExecutionException, InterruptedException {
         VisitedLocation visitedLocation = tourGuideService.getUserLocation(getUser(userName));
-        return JsonStream.serialize(tourGuideService.getNearByAttractions(visitedLocation));
+        return JsonStream.serialize(tourGuideService.getNearByAttractions(visitedLocation,userName));
     }
 
     @RequestMapping("/getRewards")

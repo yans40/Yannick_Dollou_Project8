@@ -5,34 +5,30 @@ import gpsUtil.location.VisitedLocation;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-<span class="nc" id="L9">@Setter</span>
+
 public class UserReward {
 
-<span class="nc" id="L12">	private  VisitedLocation visitedLocation;</span>
-<span class="fc" id="L13">	private Attraction attraction;</span>
+	private  VisitedLocation visitedLocation;
+	public Attraction attraction;
 	private int rewardPoints;
-<span class="fc" id="L15">	public UserReward(VisitedLocation visitedLocation, Attraction attraction, int rewardPoints) {</span>
-<span class="fc" id="L16">		this.visitedLocation = visitedLocation;</span>
-<span class="fc" id="L17">		this.attraction = attraction;</span>
-<span class="fc" id="L18">		this.rewardPoints = rewardPoints;</span>
-<span class="fc" id="L19">	}</span>
+<span class="fc" id="L14">	public UserReward(VisitedLocation visitedLocation, Attraction attraction, int rewardPoints) {</span>
+<span class="fc" id="L15">		this.visitedLocation = visitedLocation;</span>
+<span class="fc" id="L16">		this.attraction = attraction;</span>
+<span class="fc" id="L17">		this.rewardPoints = rewardPoints;</span>
+<span class="fc" id="L18">	}</span>
 	
-<span class="nc" id="L21">	public UserReward(VisitedLocation visitedLocation, Attraction attraction) {</span>
-<span class="nc" id="L22">		this.visitedLocation = visitedLocation;</span>
-<span class="nc" id="L23">		this.attraction = attraction;</span>
-<span class="nc" id="L24">	}</span>
+<span class="nc" id="L20">	public UserReward(VisitedLocation visitedLocation, Attraction attraction) {</span>
+<span class="nc" id="L21">		this.visitedLocation = visitedLocation;</span>
+<span class="nc" id="L22">		this.attraction = attraction;</span>
+<span class="nc" id="L23">	}</span>
 
-//    public UserReward() {
-//
-//    }
 
 	public void setRewardPoints(int rewardPoints) {
-<span class="nc" id="L31">		this.rewardPoints = rewardPoints;</span>
-<span class="nc" id="L32">	}</span>
+<span class="nc" id="L27">		this.rewardPoints = rewardPoints;</span>
+<span class="nc" id="L28">	}</span>
 	
-	public int getRewardPoints() {//TODO nous avons 2 methodes getRewardsPoints
-<span class="nc" id="L35">		return rewardPoints;</span>
+	public int getRewardPoints() {
+<span class="nc" id="L31">		return rewardPoints;</span>
 	}
 	
 }

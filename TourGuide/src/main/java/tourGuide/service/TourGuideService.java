@@ -3,10 +3,7 @@ package tourGuide.service;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -44,6 +41,8 @@ public class TourGuideService {
     boolean testMode = true;
     private Logger logger = LoggerFactory.getLogger(TourGuideService.class);
 
+    private ExecutorService executorService = Executors.newFixedThreadPool(10);
+
     public TourGuideService(GpsUtil gpsUtil, RewardsService rewardsService) {
         this.gpsUtil = gpsUtil;
         this.rewardsService = rewardsService;
@@ -65,7 +64,7 @@ public class TourGuideService {
     public VisitedLocation getUserLocation(User user) throws ExecutionException, InterruptedException {
         VisitedLocation visitedLocation;
         if (!user.getVisitedLocations().isEmpty()) visitedLocation = user.getLastVisitedLocation();
-        else visitedLocation = trackUserLocation(user);
+        else visitedLocation = trackUserLocation(user).get();
         return visitedLocation;
     }
 
@@ -91,25 +90,32 @@ public class TourGuideService {
         return providers;
     }
 
-    public VisitedLocation trackUserLocation(User user) throws ExecutionException, InterruptedException {
-        ExecutorService executorService = Executors.newFixedThreadPool(100);
-        Locale.setDefault(Locale.US);
-        CompletableFuture.supplyAsync(() -> {
-                    VisitedLocation visitedLocation = gpsUtil.getUserLocation(user.getUserId());
-                    user.addToVisitedLocations(visitedLocation);
-                    rewardsService.calculateRewards(user);
-                    return visitedLocation;
-                }, executorService)
-                .thenAccept(visitedLocation -> {
-                    System.out.println("User " + user.getUserName() + " tracked at location " + visitedLocation.location.toString());
-                });
-        return null;
+    public Future<VisitedLocation> trackUserLocation(User user) throws ExecutionException, InterruptedException {
+
+        return CompletableFuture.supplyAsync(() -> {
+            VisitedLocation visitedLocation = gpsUtil.getUserLocation(user.getUserId());
+            user.addToVisitedLocations(visitedLocation);
+            rewardsService.calculateRewards(user);
+            return visitedLocation;
+        }, executorService);
 
     }
 
+    public void awaitTrackUserLocationEnding() {
+        executorService.shutdown();
+        try {
+            if (!executorService.awaitTermination(15, TimeUnit.MINUTES)) {
+                executorService.shutdownNow();
+            }
 
+        } catch (InterruptedException e) {
+            executorService.shutdownNow();
+            Thread.currentThread().interrupt();
+        }
+        executorService = Executors.newFixedThreadPool(10);
+    }
 
-    public NearByAttractionDto getNearByAttractions(VisitedLocation visitedLocation) {
+    public NearByAttractionDto getNearByAttractions(VisitedLocation visitedLocation, String userName) {
 
         List<Attraction> nearbyFiveAttractions =
                 gpsUtil.getAttractions()
@@ -121,15 +127,13 @@ public class TourGuideService {
         List<AttractionInfoDTO> attractionInfoDTOArrayList = new ArrayList<>();
         for (Attraction attraction : nearbyFiveAttractions) {
             double distance = rewardsService.getDistance(attraction, visitedLocation.location);
-		int rewardPoints = rewardsService.getRewPoints(attraction,visitedLocation.userId);
+            int rewardPoints = rewardsService.getRewPoints(attraction, getUser(userName));
             AttractionInfoDTO attractionInfoDTO = new AttractionInfoDTO(attraction.attractionName, attraction.latitude,
                     attraction.longitude, distance, rewardPoints);
             attractionInfoDTOArrayList.add(attractionInfoDTO);
         }
 
-
         return new NearByAttractionDto(attractionInfoDTOArrayList, visitedLocation.location.latitude, visitedLocation.location.longitude);
-//		return nearbyFiveAttractions;
     }
 
     private void addShutDownHook() {
@@ -140,7 +144,7 @@ public class TourGuideService {
         });
     }
 
-    public User getUser(UUID userId) {
+    public User getUserById(UUID userId) {
         return internalUserMap.get(userId);
     }
 
