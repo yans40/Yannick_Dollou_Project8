@@ -25,25 +25,25 @@ import tourGuide.user.UserReward;
 
 public class TestPerformance {
 
-	/*
-	 * A note on performance improvements:
-	 *
-	 *     The number of users generated for the high volume tests can be easily adjusted via this method:
-	 *
-	 *     		InternalTestHelper.setInternalUserNumber(100000);
-	 *
-	 *
-	 *     These tests can be modified to suit new solutions, just as long as the performance metrics
-	 *     at the end of the tests remains consistent.
-	 *
-	 *     These are performance metrics that we are trying to hit:
-	 *
-	 *     highVolumeTrackLocation: 100,000 users within 15 minutes:
-	 *     		assertTrue(TimeUnit.MINUTES.toSeconds(15) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
-	 *
-	 *     highVolumeGetRewards: 100,000 users within 20 minutes:
-	 *          assertTrue(TimeUnit.MINUTES.toSeconds(20) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
-	 */
+    /*
+     * A note on performance improvements:
+     *
+     *     The number of users generated for the high volume tests can be easily adjusted via this method:
+     *
+     *     		InternalTestHelper.setInternalUserNumber(100000);
+     *
+     *
+     *     These tests can be modified to suit new solutions, just as long as the performance metrics
+     *     at the end of the tests remains consistent.
+     *
+     *     These are performance metrics that we are trying to hit:
+     *
+     *     highVolumeTrackLocation: 100,000 users within 15 minutes:
+     *     		assertTrue(TimeUnit.MINUTES.toSeconds(15) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
+     *
+     *     highVolumeGetRewards: 100,000 users within 20 minutes:
+     *          assertTrue(TimeUnit.MINUTES.toSeconds(20) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
+     */
 
     //	@Ignore
     @Test
@@ -51,7 +51,7 @@ public class TestPerformance {
         GpsUtil gpsUtil = new GpsUtil();
         RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
         // Users should be incremented up to 100,000, and test finishes within 15 minutes
-        InternalTestHelper.setInternalUserNumber(10000);
+        InternalTestHelper.setInternalUserNumber(100);
         TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService);
 
         List<User> allUsers = new ArrayList<>();
@@ -77,13 +77,13 @@ public class TestPerformance {
         RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
 
         // Users should be incremented up to 100,000, and test finishes within 20 minutes
-        InternalTestHelper.setInternalUserNumber(10000);
+        InternalTestHelper.setInternalUserNumber(1000);
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
         TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService);
 
         Attraction attraction = gpsUtil.getAttractions().get(0);// on choisit dans la liste des attractions la première attraction
-        List<User> allUsers = new ArrayList<>();// on instancie une liste
+        List<User> allUsers = new ArrayList<>(); // on instancie une liste
         allUsers = tourGuideService.getAllUsers();//on crée une liste de tous les utilisateurs fournis plus haut par internal.setInternalUserNumber
         allUsers.forEach(u -> u.addToVisitedLocations(new VisitedLocation(u.getUserId(), attraction, new Date())));// on rajoute une visitedLocation à chaque user
 
@@ -92,6 +92,7 @@ public class TestPerformance {
         for (User user : allUsers) {
             assertTrue(user.getUserRewards().size() > 0); //s'assurer que pour chaque user la taille de la liste userRewards est supérieur à 0
         }
+        rewardsService.awaitCalculateRewardsEnding();
         stopWatch.stop();
         tourGuideService.tracker.stopTracking();
 

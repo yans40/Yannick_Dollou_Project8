@@ -5,30 +5,32 @@ import gpsUtil.location.VisitedLocation;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.concurrent.CompletableFuture;
+
 
 public class UserReward {
 
 	private  VisitedLocation visitedLocation;
 	public Attraction attraction;
 	private int rewardPoints;
-<span class="fc" id="L14">	public UserReward(VisitedLocation visitedLocation, Attraction attraction, int rewardPoints) {</span>
-<span class="fc" id="L15">		this.visitedLocation = visitedLocation;</span>
-<span class="fc" id="L16">		this.attraction = attraction;</span>
-<span class="fc" id="L17">		this.rewardPoints = rewardPoints;</span>
-<span class="fc" id="L18">	}</span>
+<span class="fc" id="L16">	public UserReward(VisitedLocation visitedLocation, Attraction attraction, int rewardPoints) {</span>
+<span class="fc" id="L17">		this.visitedLocation = visitedLocation;</span>
+<span class="fc" id="L18">		this.attraction = attraction;</span>
+<span class="fc" id="L19">		this.rewardPoints = rewardPoints;</span>
+<span class="fc" id="L20">	}</span>
 	
-<span class="nc" id="L20">	public UserReward(VisitedLocation visitedLocation, Attraction attraction) {</span>
-<span class="nc" id="L21">		this.visitedLocation = visitedLocation;</span>
-<span class="nc" id="L22">		this.attraction = attraction;</span>
-<span class="nc" id="L23">	}</span>
+<span class="nc" id="L22">	public UserReward(VisitedLocation visitedLocation, Attraction attraction) {</span>
+<span class="nc" id="L23">		this.visitedLocation = visitedLocation;</span>
+<span class="nc" id="L24">		this.attraction = attraction;</span>
+<span class="nc" id="L25">	}</span>
 
 
-	public void setRewardPoints(int rewardPoints) {
-<span class="nc" id="L27">		this.rewardPoints = rewardPoints;</span>
-<span class="nc" id="L28">	}</span>
+    public void setRewardPoints(int rewardPoints) {
+<span class="nc" id="L29">		this.rewardPoints = rewardPoints;</span>
+<span class="nc" id="L30">	}</span>
 	
 	public int getRewardPoints() {
-<span class="nc" id="L31">		return rewardPoints;</span>
+<span class="nc" id="L33">		return rewardPoints;</span>
 	}
 	
 }

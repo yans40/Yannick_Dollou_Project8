@@ -38,9 +38,9 @@ public class Tracker extends Thread {
 	public void run() {
 <span class="fc" id="L39">		StopWatch stopWatch = new StopWatch();</span>
 		while(true) {
-<span class="pc bpc" id="L41" title="2 of 4 branches missed.">			if(Thread.currentThread().isInterrupted() || stop) {</span>
-<span class="nc" id="L42">				logger.debug(&quot;Tracker stopping&quot;);</span>
-<span class="nc" id="L43">				break;</span>
+<span class="fc bfc" id="L41" title="All 4 branches covered.">			if(Thread.currentThread().isInterrupted() || stop) {</span>
+<span class="fc" id="L42">				logger.debug(&quot;Tracker stopping&quot;);</span>
+<span class="fc" id="L43">				break;</span>
 			}
 			
 <span class="fc" id="L46">			List&lt;User&gt; users = tourGuideService.getAllUsers();</span>
@@ -48,7 +48,7 @@ public class Tracker extends Thread {
 <span class="fc" id="L48">			stopWatch.start();</span>
 <span class="fc" id="L49">			users.forEach(u -&gt; {</span>
 				try {
-<span class="fc" id="L51">					tourGuideService.trackUserLocation(u); //vs getUserLocation</span>
+<span class="fc" id="L51">					tourGuideService.trackUserLocation(u);</span>
 <span class="nc" id="L52">				} catch (ExecutionException e) {</span>
 <span class="nc" id="L53">					throw new RuntimeException(e);</span>
 <span class="nc" id="L54">				} catch (InterruptedException e) {</span>
@@ -60,11 +60,11 @@ public class Tracker extends Thread {
 <span class="fc" id="L60">			stopWatch.reset();</span>
 			try {
 <span class="fc" id="L62">				logger.debug(&quot;Tracker sleeping&quot;);</span>
-<span class="nc" id="L63">				TimeUnit.SECONDS.sleep(trackingPollingInterval);</span>
+<span class="fc" id="L63">				TimeUnit.SECONDS.sleep(trackingPollingInterval);</span>
 <span class="fc" id="L64">			} catch (InterruptedException e) {</span>
 <span class="fc" id="L65">				break;</span>
-<span class="nc" id="L66">			}</span>
-<span class="nc" id="L67">		}</span>
+<span class="fc" id="L66">			}</span>
+<span class="fc" id="L67">		}</span>
 		
 <span class="fc" id="L69">	}</span>
 }

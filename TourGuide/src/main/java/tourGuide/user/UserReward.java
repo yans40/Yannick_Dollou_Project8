@@ -5,6 +5,8 @@ import gpsUtil.location.VisitedLocation;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.concurrent.CompletableFuture;
+
 
 public class UserReward {
 
@@ -23,7 +25,7 @@ public class UserReward {
 	}
 
 
-	public void setRewardPoints(int rewardPoints) {
+    public void setRewardPoints(int rewardPoints) {
 		this.rewardPoints = rewardPoints;
 	}
 	

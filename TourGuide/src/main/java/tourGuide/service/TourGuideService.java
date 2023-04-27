@@ -41,7 +41,7 @@ public class TourGuideService {
     boolean testMode = true;
     private Logger logger = LoggerFactory.getLogger(TourGuideService.class);
 
-    private ExecutorService executorService = Executors.newFixedThreadPool(10);
+    private ExecutorService executorService = Executors.newFixedThreadPool(100);
 
     public TourGuideService(GpsUtil gpsUtil, RewardsService rewardsService) {
         this.gpsUtil = gpsUtil;
@@ -91,7 +91,7 @@ public class TourGuideService {
     }
 
     public Future<VisitedLocation> trackUserLocation(User user) throws ExecutionException, InterruptedException {
-
+        Locale.setDefault(Locale.US);
         return CompletableFuture.supplyAsync(() -> {
             VisitedLocation visitedLocation = gpsUtil.getUserLocation(user.getUserId());
             user.addToVisitedLocations(visitedLocation);
@@ -100,6 +100,7 @@ public class TourGuideService {
         }, executorService);
 
     }
+
 
     public void awaitTrackUserLocationEnding() {
         executorService.shutdown();
@@ -112,7 +113,7 @@ public class TourGuideService {
             executorService.shutdownNow();
             Thread.currentThread().interrupt();
         }
-        executorService = Executors.newFixedThreadPool(10);
+        executorService = Executors.newFixedThreadPool(100);
     }
 
     public NearByAttractionDto getNearByAttractions(VisitedLocation visitedLocation, String userName) {
