@@ -20,6 +20,7 @@ import tourGuide.AttractionDto.NearByAttractionDto;
 import tourGuide.helper.InternalTestHelper;
 import tourGuide.tracker.Tracker;
 import tourGuide.user.User;
+import tourGuide.user.UserPreferences;
 import tourGuide.user.UserReward;
 import tripPricer.Provider;
 import tripPricer.TripPricer;
@@ -90,7 +91,7 @@ public class TourGuideService {
         return providers;
     }
 
-    public Future<VisitedLocation> trackUserLocation(User user) throws ExecutionException, InterruptedException {
+    public Future<VisitedLocation> trackUserLocation(User user) {
         Locale.setDefault(Locale.US);
         return CompletableFuture.supplyAsync(() -> {
             VisitedLocation visitedLocation = gpsUtil.getUserLocation(user.getUserId());
@@ -128,7 +129,7 @@ public class TourGuideService {
         List<AttractionInfoDTO> attractionInfoDTOArrayList = new ArrayList<>();
         for (Attraction attraction : nearbyFiveAttractions) {
             double distance = rewardsService.getDistance(attraction, visitedLocation.location);
-            int rewardPoints = rewardsService.getRewPoints(attraction, getUser(userName));
+            int rewardPoints = rewardsService.getRewardPoints(attraction, getUser(userName));
             AttractionInfoDTO attractionInfoDTO = new AttractionInfoDTO(attraction.attractionName, attraction.latitude,
                     attraction.longitude, distance, rewardPoints);
             attractionInfoDTOArrayList.add(attractionInfoDTO);
@@ -185,4 +186,14 @@ public class TourGuideService {
         return Date.from(localDateTime.toInstant(ZoneOffset.UTC));
     }
 
+    public User updateUserPreferences(String userName, UserPreferences userPreferences) {
+
+        User user = getUser(userName);
+
+        if (null == user) {
+            throw new NoSuchElementException();
+        }
+        user.setUserPreferences(userPreferences);
+        return internalUserMap.replace(user.getUserName(), user);
+    }
 }

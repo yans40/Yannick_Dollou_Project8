@@ -3,21 +3,21 @@ package tourGuide;
 import com.jsoniter.output.JsonStream;
 import gpsUtil.location.Location;
 import gpsUtil.location.VisitedLocation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import tourGuide.service.TourGuideService;
 import tourGuide.service.UserService;
 import tourGuide.user.User;
+import tourGuide.user.UserPreferences;
 import tripPricer.Provider;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
+
+@Slf4j
 
 @RestController
 public class TourGuideController {
@@ -105,5 +105,19 @@ public class TourGuideController {
         return tourGuideService.getUser(userName);
     }
 
+    @PutMapping("/userPreferences/{userName}")
+    public ResponseEntity<?> putUserPreferences(@PathVariable String userName, @RequestBody UserPreferences userPreferences) {
 
+        log.debug("request for set userPreferences of userName : {}", userName);
+
+        try {
+            User userSaved = tourGuideService.updateUserPreferences(userName, userPreferences);
+            System.out.println(userSaved.getUserPreferences().getNumberOfChildren());// ligne qui me permet de voir que les changements sont bien réalisé
+            return ResponseEntity.status(HttpStatus.OK).body(userSaved);
+        } catch (NoSuchElementException e) {
+            String logAndBodyMessage = "error while putting user because missing user with userName=" + userName;
+            log.error(logAndBodyMessage);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(logAndBodyMessage);
+        }
+    }
 }

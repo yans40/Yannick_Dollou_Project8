@@ -27,8 +27,8 @@ repositories {
     }
 }
 
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 dependencies {
     implementation 'org.projectlombok:lombok:1.18.26'

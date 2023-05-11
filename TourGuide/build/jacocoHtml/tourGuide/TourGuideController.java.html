@@ -3,21 +3,21 @@
 import com.jsoniter.output.JsonStream;
 import gpsUtil.location.Location;
 import gpsUtil.location.VisitedLocation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import tourGuide.service.TourGuideService;
 import tourGuide.service.UserService;
 import tourGuide.user.User;
+import tourGuide.user.UserPreferences;
 import tripPricer.Provider;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
+
+<span class="nc" id="L20">@Slf4j</span>
 
 @RestController
 <span class="nc" id="L23">public class TourGuideController {</span>
@@ -105,6 +105,20 @@ import java.util.concurrent.ExecutionException;
 <span class="nc" id="L105">        return tourGuideService.getUser(userName);</span>
     }
 
+    @PutMapping(&quot;/userPreferences/{userName}&quot;)
+    public ResponseEntity&lt;?&gt; putUserPreferences(@PathVariable String userName, @RequestBody UserPreferences userPreferences) {
 
+<span class="nc" id="L111">        log.debug(&quot;request for set userPreferences of userName : {}&quot;, userName);</span>
+
+        try {
+<span class="nc" id="L114">            User userSaved = tourGuideService.updateUserPreferences(userName, userPreferences);</span>
+<span class="nc" id="L115">            System.out.println(userSaved.getUserPreferences().getNumberOfChildren());// ligne qui me permet de voir que les changements sont bien rÃ©alisÃ©</span>
+<span class="nc" id="L116">            return ResponseEntity.status(HttpStatus.OK).body(userSaved);</span>
+<span class="nc" id="L117">        } catch (NoSuchElementException e) {</span>
+<span class="nc" id="L118">            String logAndBodyMessage = &quot;error while putting user because missing user with userName=&quot; + userName;</span>
+<span class="nc" id="L119">            log.error(logAndBodyMessage);</span>
+<span class="nc" id="L120">            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(logAndBodyMessage);</span>
+        }
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

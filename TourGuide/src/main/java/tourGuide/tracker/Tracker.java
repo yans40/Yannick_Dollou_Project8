@@ -22,10 +22,10 @@ public class Tracker extends Thread {
 
 	public Tracker(TourGuideService tourGuideService) {
 		this.tourGuideService = tourGuideService;
-		
+
 		executorService.submit(this);
 	}
-	
+
 	/**
 	 * Assures to shut down the Tracker thread
 	 */
@@ -33,7 +33,7 @@ public class Tracker extends Thread {
 		stop = true;
 		executorService.shutdownNow();
 	}
-	
+
 	@Override
 	public void run() {
 		StopWatch stopWatch = new StopWatch();
@@ -42,21 +42,13 @@ public class Tracker extends Thread {
 				logger.debug("Tracker stopping");
 				break;
 			}
-			
+
 			List<User> users = tourGuideService.getAllUsers();
 			logger.debug("Begin Tracker. Tracking " + users.size() + " users.");
 			stopWatch.start();
-			users.forEach(u -> {
-				try {
-					tourGuideService.trackUserLocation(u);
-				} catch (ExecutionException e) {
-					throw new RuntimeException(e);
-				} catch (InterruptedException e) {
-					throw new RuntimeException(e);
-				}
-			});
+			users.forEach(tourGuideService::trackUserLocation);
 			stopWatch.stop();
-			logger.debug("Tracker Time Elapsed: " + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + " seconds."); 
+			logger.debug("Tracker Time Elapsed: " + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + " seconds.");
 			stopWatch.reset();
 			try {
 				logger.debug("Tracker sleeping");
@@ -65,6 +57,6 @@ public class Tracker extends Thread {
 				break;
 			}
 		}
-		
+
 	}
 }
