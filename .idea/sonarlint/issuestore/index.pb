@@ -5,8 +5,6 @@ x
 HTourGuide/src/main/java/tourGuide/AttractionDto/NearByAttractionDto.java,5\1\5102d410b3924b2f9d00f3723139b150fe03607e
 p
 @TourGuide/src/main/java/tourGuide/helper/InternalTestHelper.java,d\a\da6a493882912f023a6e9e540ed8afcc171c0c39
-b
-2TourGuide/gradle/wrapper/gradle-wrapper.properties,9\4\940afe98f6f6556011761182c48555e9e80216aa
 j
 :TourGuide/src/main/java/tourGuide/service/UserService.java,c\9\c93e7146b6b5a18f5b8ef3b05d5edb4877c21ab4
 f
@@ -27,5 +25,3 @@ f
 6TourGuide/src/main/java/tourGuide/tracker/Tracker.java,5\5\55b3b97677ebc2f36854c042a6eedf53079c38ab
 k
 ;TourGuide/src/main/java/tourGuide/user/UserPreferences.java,3\c\3c92cab1e6e2fa195a3a708e67b8c1739dfd0ade
-F
-TourGuide/build.gradle,4\f\4f9c1d769b3cf4fbc4c96a9cf8354e0aa02c8e42
