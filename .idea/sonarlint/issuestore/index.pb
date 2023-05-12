@@ -17,3 +17,15 @@ f
 6TourGuide/src/main/java/tourGuide/user/UserReward.java,0\e\0e562b3c8c7f4b99f0dadaf3783444e8387bb975
 `
 0TourGuide/src/main/java/tourGuide/user/User.java,d\5\d5d28579e7756ecd10604635ae67e8263f0fa7f5
+b
+2TourGuide/src/main/java/tourGuide/Application.java,3\d\3d5464aea2bc65115589b158292e3bb53433dfc8
+j
+:TourGuide/src/main/java/tourGuide/TourGuideController.java,1\9\1925a2c1783366757753627566fa46ccf0614655
+o
+?TourGuide/src/main/java/tourGuide/service/TourGuideService.java,c\3\c314387cca42e210b5cd748c77b6efc56fbe9483
+f
+6TourGuide/src/main/java/tourGuide/tracker/Tracker.java,5\5\55b3b97677ebc2f36854c042a6eedf53079c38ab
+k
+;TourGuide/src/main/java/tourGuide/user/UserPreferences.java,3\c\3c92cab1e6e2fa195a3a708e67b8c1739dfd0ade
+F
+TourGuide/build.gradle,4\f\4f9c1d769b3cf4fbc4c96a9cf8354e0aa02c8e42
