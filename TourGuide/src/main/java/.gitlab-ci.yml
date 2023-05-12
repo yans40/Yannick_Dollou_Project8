@@ -19,4 +19,4 @@ deploy:
     - ./gradlew bootJar
   artifacts:
     paths:
-      - build/libs/*.jar
+      - TourGuide/build/libs/*.jar
