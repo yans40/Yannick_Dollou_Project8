@@ -13,11 +13,15 @@ tourGuide/helper/InternalTestHelper.java
 tourGuide/service/TourGuideService.java
  tourGuide.service.TourGuideService
  tourGuide.service.TourGuideService$1
+tourGuide/TourGuideController.java
+ tourGuide.TourGuideController
 tourGuide/Application.java
  tourGuide.Application
 tourGuide/tracker/Tracker.java
  tourGuide.tracker.Tracker
 tourGuide/AttractionDto/NearByAttractionDto.java
  tourGuide.AttractionDto.NearByAttractionDto
+tourGuide/TourGuideModule.java
+ tourGuide.TourGuideModule
 tourGuide/user/User.java
  tourGuide.user.User

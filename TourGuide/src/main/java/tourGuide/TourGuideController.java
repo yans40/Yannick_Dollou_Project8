@@ -13,7 +13,6 @@ import tourGuide.service.UserService;
 import tourGuide.user.User;
 import tourGuide.user.UserPreferences;
 import tripPricer.Provider;
-
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
@@ -108,15 +107,13 @@ public class TourGuideController {
     @PutMapping("/userPreferences/{userName}")
     public ResponseEntity<?> putUserPreferences(@PathVariable String userName, @RequestBody UserPreferences userPreferences) {
 
-        log.debug("request for set userPreferences of userName : {}", userName);
-
         try {
             User userSaved = tourGuideService.updateUserPreferences(userName, userPreferences);
             System.out.println(userSaved.getUserPreferences().getNumberOfChildren());// ligne qui me permet de voir que les changements sont bien réalisé
             return ResponseEntity.status(HttpStatus.OK).body(userSaved);
         } catch (NoSuchElementException e) {
             String logAndBodyMessage = "error while putting user because missing user with userName=" + userName;
-            log.error(logAndBodyMessage);
+
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(logAndBodyMessage);
         }
     }
