@@ -17,8 +17,6 @@ f
 0TourGuide/src/main/java/tourGuide/user/User.java,d\5\d5d28579e7756ecd10604635ae67e8263f0fa7f5
 b
 2TourGuide/src/main/java/tourGuide/Application.java,3\d\3d5464aea2bc65115589b158292e3bb53433dfc8
-j
-:TourGuide/src/main/java/tourGuide/TourGuideController.java,1\9\1925a2c1783366757753627566fa46ccf0614655
 o
 ?TourGuide/src/main/java/tourGuide/service/TourGuideService.java,c\3\c314387cca42e210b5cd748c77b6efc56fbe9483
 f
