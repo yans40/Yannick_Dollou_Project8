@@ -1,0 +1,17 @@
+
+{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(—ìÉûÿÿÿÿ8íì¤Åş0
+v	java:S115#"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ïšä8ûì¤Åş0
+X
+java:S1161":Add the "@Override" annotation above this method signature(“–ış8ˆí¤Åş0
+_
+java:S2175–"AA "Map<String, User>" cannot contain a "UUID" in a "String" type.(õíÔß8ˆí¤Åş0
+d
+java:S3457£"AFormat specifiers should be used instead of string concatenation.(É°™˜øÿÿÿÿ8‰í¤Åş0
+J
+java:S1602§",Remove useless curly braces around statement(ßê™è8‰í¤Åş0
+<
+java:S2119¯"Save and re-use this "Random".(éÖÃì8‹í¤Åş0
+<
+java:S2119µ"Save and re-use this "Random".(éÖÃì8‹í¤Åş0
+A
+java:S2119¹"Save and re-use this "Random".(—íø–şÿÿÿÿ8Œí¤Åş0

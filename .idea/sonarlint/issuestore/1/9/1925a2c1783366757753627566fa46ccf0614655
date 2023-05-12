@@ -1,0 +1,10 @@
+
+u	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ˆÄ±8’ñ·ÿ0
+O
+java:S1135*"2Complete the task associated to this TODO comment.(Ûù¨‰8¢ñ·ÿ0
+X	java:S125E"<This block of commented-out lines of code should be removed.(Ú°à¬8¤ñ·ÿ0
+T
+java:S1135@"2Complete the task associated to this TODO comment.(â®Æ«ÿÿÿÿÿ8¤ñ·ÿ0
+C
+java:S1452m"&Remove usage of generic wildcard type.(³·¬8¨ñ·ÿ0
+U	java:S106s"9Replace this use of System.out or System.err by a logger.(¼âÃ‡8©ñ·ÿ0

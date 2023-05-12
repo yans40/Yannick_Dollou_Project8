@@ -1,0 +1,12 @@
+
+q
+java:S1104"VMake attraction a static final constant or non-public and provide accessors if needed.(ÜŠæ‡þÿÿÿÿ
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ôÞ®œ
+@
+java:S1128"*Remove this unused import 'lombok.Getter'.(ùÒµÙ
+@
+java:S1128"*Remove this unused import 'lombok.Setter'.(ó¸çµ
+Y
+java:S1128"CRemove this unused import 'java.util.concurrent.CompletableFuture'.(ôÞä´
+I
+java:S1068"3Remove this unused "visitedLocation" private field.(ñ†Åÿ
